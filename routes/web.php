@@ -69,3 +69,22 @@ Route::middleware('auth:sanctum')->prefix('perpus')->group(function () {
     Route::get('/overdue', [LoanController::class, 'checkOverdue'])->name('checkOverdue');
     Route::get('/history', [LoanController::class, 'history'])->name('history');
 });
+
+Route::get('/posts', function () {
+    $response = Http::get('https://jsonplaceholder.typicode.com/posts');
+    $posts = collect($response->json())->take(10);
+    return view('posts', compact('posts'));
+});
+
+Route::delete('/posts/{id}', function ($id) {
+    return response()->json(['message' => "Post dengan ID $id telah dihapus"]);
+});
+
+Route::get('/modified-posts', function () {
+    $response = Http::get('https://jsonplaceholder.typicode.com/posts');
+    $posts = collect($response->json())->take(10)->map(function ($post) {
+        unset($post['userId']);
+        return $post;
+    });
+    return response()->json($posts);
+});
