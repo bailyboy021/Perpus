@@ -37,7 +37,7 @@ Route::prefix('admin/')->group(function () { //Route Gorup Prefix admin
     }); // End Route Name admin.
 }); // End Route Gorup Prefix admin
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum','role:super-admin,admin'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('users');
     Route::post('/data-user', [UserController::class, 'getUsers'])->name('data_user');
     Route::post('/tambah-user', [UserController::class, 'add'])->name('tambah_user');
@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/hapus-user', [UserController::class, 'destroyUser'])->name('hapus_user');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum','role:super-admin,admin'])->group(function () {
     Route::get('/buku', [BookController::class, 'index'])->name('books');
     Route::post('/data-buku', [BookController::class, 'getBooks'])->name('data_buku');
     Route::post('/tambah-buku', [BookController::class, 'add'])->name('tambah_buku');

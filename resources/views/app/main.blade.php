@@ -258,6 +258,26 @@
             </script>
         @endif
 
+        @if (session('error'))
+            <!-- SweetAlert2 notification script -->
+            <script>
+                $(function() {
+                    var Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+
+                    // Trigger SweetAlert2 notification on page load
+                    Toast.fire({
+                        icon: 'error',
+                        title: '{{ session('error') }}'
+                    });
+                });
+            </script>
+        @endif
+
         <!-- daterangepicker -->
         <script src="{{ asset('AdminLTE-3.2.0/plugins/moment/moment.min.js') }}"></script>
         <script src="{{ asset('AdminLTE-3.2.0/plugins/daterangepicker/daterangepicker.js') }}"></script>
